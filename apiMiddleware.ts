@@ -20,61 +20,60 @@ export type FormattedPhoto = {
   };
 };
 
-// let timeStamp: number, currentPage: number;
 let currentPage: number;
 
+// HANDLE THIS!!
 // how to reset currentPage if searchTerm changes?
 
 async function getPhotosMiddleware({
   searchTerm,
-}: // currentPage,
-{
+  reset,
+}: {
   searchTerm: string;
-  // currentPage: number;
+  reset: boolean;
 }) {
   let formattedPhotos = [],
     pagesLeft,
     totalPhotos,
-    timeStamp;
+    timeStamp = 0;
 
-  // only let end point be called every 2 seconds max
-  // console.log({ timeStamp });
-  // DO I NEED THIS TIMESTAMP SAFEGUARD OR SHOULD I LET THE FRONT END HANDLE IT AND JUST SEND THE TIMESTAMP BACK ?
-  // if (!timeStamp || timeStamp + 2000 < Date.now()) {
-  if (!currentPage) currentPage = 1;
+  if (!currentPage || reset) currentPage = 1;
 
-  const {
-    status,
-    data: { results, total, total_pages: totalPages },
-  } = await axios.get("/api/searchPhotos", {
-    params: {
-      searchTerm,
-      currentPage,
-    },
-  });
-  if (status !== 200)
-    throw new Error("searchPhotos failed: check console logs");
+  if (searchTerm) {
+    const {
+      status,
+      data: { results, total, total_pages: totalPages },
+    } = await axios.get("/api/searchPhotos", {
+      params: {
+        searchTerm,
+        currentPage,
+      },
+    });
+    if (status !== 200)
+      throw new Error("searchPhotos failed: check console logs");
 
-  console.log({ total, totalPages });
+    console.log({ total, totalPages });
 
-  timeStamp = Date.now();
-  pagesLeft = totalPages - currentPage;
-  currentPage = totalPages - pagesLeft + 1;
-  totalPhotos = total;
-  // return id for unique react key
-  formattedPhotos = results.map(
-    ({ height, width, id, urls }: FormattedPhoto) => ({
-      height,
-      width,
-      id,
-      urls,
-    })
-  );
-  // }
+    // set timestamp to current date after unsplash api return
+    timeStamp = Date.now();
+    pagesLeft = totalPages - currentPage;
+    currentPage = totalPages - pagesLeft + 1;
+    totalPhotos = total;
+    // return id for unique react key
+    formattedPhotos = results.map(
+      ({ height, width, id, urls }: FormattedPhoto) => ({
+        height,
+        width,
+        id,
+        urls,
+      })
+    );
+  }
 
   console.log("INSIDE MIDDLEWARE -- before return");
   console.log({ searchTerm, currentPage });
 
+  // make sure you re-evaluate this and only return to the front end what it needs
   return { formattedPhotos, pagesLeft, totalPhotos, currentPage, timeStamp };
 }
 

@@ -1,9 +1,7 @@
-// import React here?
-
 // ORGANIZE THESE IMPORTS
 import type { NextPage } from "next";
 // import { FormEvent } from "react";
-import {
+import React, {
   useState,
   useEffect,
   ChangeEvent,
@@ -26,15 +24,30 @@ import { useScrollHeight } from "../customHooks/useScrollHeight";
 
 type FormattedPhotos = [FormattedPhoto] | [];
 
-const submitForm = (
-  searchTerm: string,
-  setPhotos: Dispatch<SetStateAction<FormattedPhotos>>,
-  lastFetched: { current: number }
-  // setTimeStamp: Dispatch<SetStateAction<number>>
-) => {
+// THINGS TO HANDLE
+// REACHING END OF PAGES -- NO MORE PHOTOS TO NOW - total photos - photos.length === 0 or pagesLeft === 0?
+// NO PHOTO RESULTS
+
+// MAKE MODULAR
+// PHOTO DETAILS CLICK
+// REREAD DIRECTIONS
+
+type FormSubmit = {
+  searchTerm: string;
+  setPhotos: Dispatch<SetStateAction<FormattedPhotos>>;
+  lastFetched: { current: number };
+  reset: boolean;
+};
+
+const submitForm = ({
+  searchTerm,
+  setPhotos,
+  lastFetched,
+  reset,
+}: FormSubmit) => {
   // should this function get a flag called reset that resets currentPage
   // eg if the searchTerm changes?
-  getPhotosMiddleware({ searchTerm })
+  getPhotosMiddleware({ searchTerm, reset })
     .then((res) => {
       const {
         formattedPhotos,
@@ -63,7 +76,8 @@ const submitForm = (
 const Home: NextPage = () => {
   const [searchInput, setSearchInput] = useState<string>("");
   const [photos, setPhotos] = useState<FormattedPhotos>([]);
-  // const [lastFetched, setLastFetched] = useState<number>(0);
+  // USE state to handle the remaining photos and no photos found?
+  // const [photosRemaining, ]
   const lastFetched = useRef<number>(0);
 
   const currentScrollHeight = useScrollHeight();
@@ -88,7 +102,12 @@ const Home: NextPage = () => {
 
     // at the bottom - no more photos left if totalPhots === photos.length
     if (shouldFetch) {
-      submitForm(searchInput, setPhotos, lastFetched);
+      submitForm({
+        searchTerm: searchInput,
+        setPhotos,
+        lastFetched,
+        reset: false,
+      });
     }
   }, [currentScrollHeight, lastFetched, photos.length, searchInput]);
 
@@ -103,10 +122,17 @@ const Home: NextPage = () => {
       <form
         onSubmit={(e: FormEvent<HTMLFormElement>) => {
           e.preventDefault();
-          // reset photos array here for a new form submit?
-          submitForm(searchInput, setPhotos, lastFetched);
+          // reset photos array for new search
+          if (photos.length) setPhotos([]);
+          submitForm({
+            searchTerm: searchInput,
+            setPhotos,
+            lastFetched,
+            reset: true,
+          });
         }}
       >
+        {/* MAKE THIS FORM INPUT IT'S OWN COMPONENT SO IT DOESN'T REPAINT THE WHOLE LIST/PAGE WHEN YOU TYPE A CHARACTER */}
         <input
           type="text"
           placeholder="search term"
@@ -120,7 +146,6 @@ const Home: NextPage = () => {
       {photos.map(({ height, width, id, urls }, i) => {
         const { full, raw, regular, small } = urls;
         return (
-          // <div key={`${id}_${i}`}>
           <div key={`${id}`}>
             {/* <Image src={small} quality={100} height={400} width={400} alt="" /> */}
             {/* mess with this height/ width in order to get images to load in faster? */}
