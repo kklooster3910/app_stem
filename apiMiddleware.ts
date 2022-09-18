@@ -1,12 +1,4 @@
-import { NextResponse, NextRequest } from "next/server";
-import type { NextApiRequest, NextApiResponse } from "next";
-import { SearchPhotosApiReq } from "./pages/api/searchPhotos";
-import searchPhotos from "./pages/api/searchPhotos";
-
 import axios from "axios";
-
-// don't need to determine environment to hit proper domain. eg: localahost vs deployed domain
-// console.log({ process, env: process.env.NODE_ENV });
 
 export type FormattedPhoto = {
   height: number;
@@ -22,8 +14,7 @@ export type FormattedPhoto = {
 
 let currentPage: number;
 
-// HANDLE THIS!!
-// how to reset currentPage if searchTerm changes?
+// IF pages left is negative or 0 then we don't want to call this end point towards the bottom of scroll
 
 async function getPhotosMiddleware({
   searchTerm,
@@ -54,7 +45,7 @@ async function getPhotosMiddleware({
 
     console.log({ total, totalPages });
 
-    // set timestamp to current date after unsplash api return
+    // set timestamp to current date after successful return
     timeStamp = Date.now();
     pagesLeft = totalPages - currentPage;
     currentPage = totalPages - pagesLeft + 1;
