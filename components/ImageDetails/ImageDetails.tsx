@@ -27,7 +27,7 @@ const ImageDetails = ({
       <div
         className={`${styles.image} ${width > 4000 ? styles.extraWide : ""} ${
           height / width > 1 ? styles.tall : ""
-        } `}
+        } ${height / width > 1.6 ? styles.twoXTall : ""}`}
       >
         <button
           onClick={() => {
@@ -44,6 +44,8 @@ const ImageDetails = ({
           objectFit="contain"
           height={height}
           width={width}
+          placeholder="blur"
+          blurDataURL="/loading.jpeg"
         />
       </div>
       <div

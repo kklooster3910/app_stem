@@ -27,8 +27,9 @@ Uses Unsplash api to search for images and creates and endless scrolling effect 
 ## TODO: A list of items I would like to implement
 
 - Make a Types file and export all types from there to DRY up redundant typing
-- Implement a loading feature to show images or beig fetched from the API or Next Image component hasn't loaded the image url yet as the image source as this component loads asynchronously as the images scroll into view
 - App state - use context, redux, or some other form of state management instead of having a main component use local state. Would depend on use cases and size of app. I think context would be a good choice for an image search if more functionality was implemented, eg: liking photos
-- Optimize/cache different size of images for the ImageDetails component, loading these images can be slow as the image doesn't get downloaded by the browser until the image is clicked
+- Optimize/prefetch different size of images for the ImageDetails component, loading these images can be slow as the image doesn't get downloaded by the browser until the image is clicked
+- Implement a loading feature to show images are being fetched from the API or Next Image component hasn't loaded the image url yet as the image source as this component loads asynchronously as the images scroll into view (Next Image blurDataUrl is working on first image load and then doesn't --> need to debug further)
 - Optimize grid. I chose to keep the aspect ratio of the image source as allow the grid to have some empty white space and I would like to spend more time optimizing the grid layout so that the white space is filled better. Ideally I want the images to arrange/fill the grid in a way that optimizes white space
-- Optmize detection of bottom of page. I chose to fetch more photos for the infinite scroll if the user has scrolled to a certain point towards the bottom of the image grid container. I think utilizing a percentage here as opposed to being X amount of pixels from the bottom is less error prone to different view port sizes
+- Optmize detection of bottom of page. I chose to fetch more photos for the infinite scroll if the user has scrolled to a certain point towards the bottom of the image grid container. I think utilizing a percentage here as opposed to being X amount of pixels from the bottom is less error prone to different view port sizes, didn't encounter a screensize that wasn't working in testing, will revisit
+- convert loading img and favicon to webp

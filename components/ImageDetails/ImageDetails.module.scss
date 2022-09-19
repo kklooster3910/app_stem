@@ -33,6 +33,9 @@
     > span {
       border-radius: 40px;
     }
+    &.twoXTall {
+      width: 90%;
+    }
   }
 
   &.hidden {
@@ -52,6 +55,9 @@
       width: 65%;
       &.tall {
         width: 55%;
+      }
+      &.twoXTall {
+        width: 50%;
       }
     }
   }
