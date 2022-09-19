@@ -18,6 +18,8 @@ const ImageDetails = ({
   width,
   handleClose,
 }: ImageDetailsProps) => {
+  console.log({ height, width });
+
   return (
     <div
       className={`${styles.imageDetails} ${
@@ -25,7 +27,9 @@ const ImageDetails = ({
       }`}
     >
       <div
-        className={`${styles.image} ${height / width > 1 ? styles.tall : ""}`}
+        className={`${styles.image} ${width > 4000 ? styles.extraWide : ""} ${
+          height / width > 1 ? styles.tall : ""
+        } `}
       >
         <button
           onClick={() => {
