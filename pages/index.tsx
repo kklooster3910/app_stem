@@ -1,4 +1,9 @@
 // ORGANIZE THESE IMPORTS
+// ORGANIZE THESE IMPORTS
+// ORGANIZE THESE IMPORTS
+// ORGANIZE THESE IMPORTS
+// ORGANIZE THESE IMPORTS
+// ORGANIZE THESE IMPORTS
 import type { NextPage } from "next";
 import Head from "next/head";
 
@@ -17,9 +22,10 @@ import { getPhotosMiddleware, FormattedPhoto } from "../apiMiddleware";
 // import styles from "../styles/Home.module.css";
 import SearchPhotosForm from "../components/SearchPhotosForm";
 
-import MainPageWrapper from "../components/MainPageWrapper";
 import ImageGrid from "../components/ImageGrid";
 import { useInfiniteScroll } from "../customHooks/useInfiniteScroll";
+
+import styles from "./main.module.scss";
 
 // import throttle from "lodash/throttle";
 
@@ -64,7 +70,7 @@ const Home: NextPage = () => {
 
   // update the id of the image container when you make this more modular and make components for everything
   return (
-    <div>
+    <div className={styles.main}>
       <Head>
         <title>Image Search</title>
         <meta name="search images using unsplash API" content="image search" />

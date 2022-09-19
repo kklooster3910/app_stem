@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import throttle from "lodash/throttle";
 
 export const useScrollHeight = () => {
-  const [scrollHeight, setScrollHeight] = useState(0);
+  const [scrollHeight, setScrollHeight] = useState<number>(0);
 
   const handleScrollPosChange = throttle(() => {
     setScrollHeight(window.pageYOffset);

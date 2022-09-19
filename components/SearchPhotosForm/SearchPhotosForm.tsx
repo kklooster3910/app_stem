@@ -1,10 +1,4 @@
-import React, {
-  ChangeEvent,
-  FormEvent,
-  // useState,
-  Dispatch,
-  SetStateAction,
-} from "react";
+import React, { ChangeEvent, FormEvent, Dispatch, SetStateAction } from "react";
 
 import { FormattedPhoto } from "../../apiMiddleware";
 import { submitForm } from "../../pages/utils";
@@ -22,6 +16,8 @@ type SearchPhotosFormProps = {
   setPhotos: Dispatch<SetStateAction<FormattedPhotos>>;
   setSearchInput: Dispatch<SetStateAction<string>>;
 };
+
+// MAKE A NOTE ABOUT THE IMAGE PAGINATION NOT WORKING IF YOU REMOVE THE SEARCH INPUT STATE
 
 const SearchPhotosForm = ({
   searchInput,
@@ -56,9 +52,9 @@ const SearchPhotosForm = ({
             setSearchInput(e.target.value)
           }
         />
-        {/* MAKE SURE YOU DISABLET HIS BUTTON IF THERE IS NO SEARCH INPUT */}
-        {/* disable button based on there being an actual input*/}
-        <button type="submit">Search Photos</button>
+        <button disabled={!searchInput} type="submit">
+          Search Photos
+        </button>
       </form>
     </div>
   );

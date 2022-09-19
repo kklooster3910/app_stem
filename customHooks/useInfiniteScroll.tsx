@@ -29,11 +29,9 @@ export const useInfiniteScroll = ({
     const imgContainerNodeScrollHeight =
       document.getElementById("imageContainer")?.scrollHeight || 0;
 
-    const percentageScrolled =
-      (currentScrollHeight / imgContainerNodeScrollHeight) * 100;
-
     const shouldFetch =
-      percentageScrolled > 90 &&
+      // scrolled to less than 2000 px from bottom of image grid
+      imgContainerNodeScrollHeight - currentScrollHeight < 2000 &&
       !!photos.length &&
       lastFetched.current !== 0 &&
       lastFetched.current + 2000 <= Date.now();

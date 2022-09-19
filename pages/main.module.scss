@@ -1,0 +1,12 @@
+.main {
+  padding: 2rem;
+  > h1 {
+    text-align: center;
+  }
+}
+
+@media (min-width: 768px) {
+  .main {
+    padding: 4rem;
+  }
+}

@@ -13,43 +13,54 @@ type ImageGridProps = {
   photos: FormattedPhotos;
 };
 
+type ImageDetails = {
+  imgSrc: string;
+  height: number;
+  width: number;
+};
+
 const ImageGrid = ({ photos }: ImageGridProps) => {
   const [isDetailsOpen, setIsDetailsOpen] = useState<boolean>(false);
-
-  // const handleOpenPhotoDte
+  const [imageDetails, setImageDetails] = useState<ImageDetails>({
+    imgSrc: "",
+    height: 0,
+    width: 0,
+  });
 
   return (
-    <div className={styles.imageGrid} id="imageContainer">
-      {photos.map(({ height, width, id, urls }, i) => {
-        // different image sizes
-        // remove sizes that aren't needed
-        const { full, raw, regular, small } = urls;
-        // const handleOpenPhotoDetails = () => {
-        //   const photoUrl =
-        // }
-        return (
-          <div key={`${id}`}>
-            {/* <Image src={small} quality={100} height={400} width={400} alt="" /> */}
-            {/* mess with this height/ width in order to get images to load in faster? */}
-            {/* make sure you mess with image size to get these to load faster */}
-            <Image
-              src={small}
-              quality={100}
-              layout="responsive"
-              height={height}
-              width={width}
-              alt=""
-              onClick={() => setIsDetailsOpen(!isDetailsOpen)}
-            />
-            <ImageDetails
-              handleClick={() => setIsDetailsOpen(true)}
-              isOpen={isDetailsOpen}
-              imgSrc={full}
-              {...{ height, width }}
-            />
-          </div>
-        );
-      })}
+    <div className={styles.gridContainer}>
+      <div className={styles.imageGrid} id="imageContainer">
+        {photos.map(({ height, width, id, urls }, i) => {
+          const { full, raw, regular, small } = urls;
+          return (
+            <div key={`${id}`} className={styles.gridImage}>
+              <Image
+                src={small}
+                quality={100}
+                layout="responsive"
+                height={height}
+                width={width}
+                alt=""
+                onClick={() => {
+                  setImageDetails({
+                    imgSrc: regular,
+                    height,
+                    width,
+                  });
+                  setIsDetailsOpen(true);
+                }}
+              />
+            </div>
+          );
+        })}
+        <ImageDetails
+          handleClose={() => setIsDetailsOpen(false)}
+          isOpen={isDetailsOpen}
+          imgSrc={imageDetails.imgSrc}
+          height={imageDetails.height}
+          width={imageDetails.width}
+        />
+      </div>
     </div>
   );
 };
