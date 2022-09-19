@@ -9,6 +9,7 @@ export type FormattedPhoto = {
     raw: string;
     small: string;
     regular: string;
+    thumb: string;
   };
 };
 

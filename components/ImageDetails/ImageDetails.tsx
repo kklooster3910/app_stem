@@ -18,8 +18,6 @@ const ImageDetails = ({
   width,
   handleClose,
 }: ImageDetailsProps) => {
-  console.log({ height, width });
-
   return (
     <div
       className={`${styles.imageDetails} ${

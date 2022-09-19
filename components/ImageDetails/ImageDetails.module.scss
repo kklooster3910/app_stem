@@ -50,6 +50,9 @@
     .image {
       max-height: 90%;
       width: 65%;
+      &.tall {
+        width: 55%;
+      }
     }
   }
 }

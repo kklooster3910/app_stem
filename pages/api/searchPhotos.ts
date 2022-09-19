@@ -8,9 +8,6 @@ type Data = {
 };
 
 const unsplashAPIKey = process.env.UNSPLASH_ACCESS_KEY;
-// secret key not needed for api request
-const unsplashSecretKey = process.env.UNSPLASH_SECRET_KEY;
-
 export interface SearchPhotosApiReq extends NextApiRequest {
   params: {
     searchTerm: string;

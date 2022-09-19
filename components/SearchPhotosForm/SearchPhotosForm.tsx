@@ -17,8 +17,6 @@ type SearchPhotosFormProps = {
   setSearchInput: Dispatch<SetStateAction<string>>;
 };
 
-// MAKE A NOTE ABOUT THE IMAGE PAGINATION NOT WORKING IF YOU REMOVE THE SEARCH INPUT STATE
-
 const SearchPhotosForm = ({
   searchInput,
   photos,
