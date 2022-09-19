@@ -66,11 +66,14 @@
 @media (min-width: 1028px) {
   .imageDetails {
     .image {
+      &.extraWide {
+        width: 54%;
+      }
       &.tall {
         width: 40%;
       }
-      &.extraWide {
-        width: 54%;
+      &.twoXTall {
+        width: 50%;
       }
     }
   }
