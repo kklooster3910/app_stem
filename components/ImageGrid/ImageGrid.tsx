@@ -33,7 +33,7 @@ const ImageGrid = ({ photos }: ImageGridProps) => {
         {photos.map(({ height, width, id, urls }, i) => {
           const { full, raw, regular, small } = urls;
           return (
-            <div key={`${id}`} className={styles.gridImage}>
+            <div key={`${id}_${i}`} className={styles.gridImage}>
               <Image
                 src={small}
                 quality={100}
@@ -53,13 +53,15 @@ const ImageGrid = ({ photos }: ImageGridProps) => {
             </div>
           );
         })}
-        <ImageDetails
-          handleClose={() => setIsDetailsOpen(false)}
-          isOpen={isDetailsOpen}
-          imgSrc={imageDetails.imgSrc}
-          height={imageDetails.height}
-          width={imageDetails.width}
-        />
+        {imageDetails?.imgSrc && (
+          <ImageDetails
+            handleClose={() => setIsDetailsOpen(false)}
+            isOpen={isDetailsOpen}
+            imgSrc={imageDetails.imgSrc}
+            height={imageDetails.height}
+            width={imageDetails.width}
+          />
+        )}
       </div>
     </div>
   );

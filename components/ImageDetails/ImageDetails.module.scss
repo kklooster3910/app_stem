@@ -48,13 +48,28 @@
 @media (min-width: 768px) {
   .imageDetails {
     .image {
-      max-height: calc(100% - 100px);
-      width: 50%;
+      max-height: 90%;
+      width: 65%;
     }
   }
 }
 
 @media (min-width: 1028px) {
   .imageDetails {
+    .image {
+      &.tall {
+        width: 40%;
+      }
+    }
+  }
+}
+
+@media (min-width: 1920px) {
+  .imageDetails {
+    .image {
+      &.tall {
+        width: 30%;
+      }
+    }
   }
 }

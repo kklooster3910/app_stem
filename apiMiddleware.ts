@@ -12,19 +12,15 @@ export type FormattedPhoto = {
   };
 };
 
-let currentPage: number;
+let currentPage: number, previousSearch: string | undefined;
 
 async function getPhotosMiddleware({
   searchTerm,
-  // endOfPages,
   reset,
 }: {
   searchTerm: string;
-  endOfPages: boolean;
   reset: boolean;
 }) {
-  // if (endOfPages) return {};
-
   let formattedPhotos = [],
     pagesLeft,
     totalPhotos,
@@ -32,13 +28,13 @@ async function getPhotosMiddleware({
 
   if (!currentPage || reset) currentPage = 1;
 
-  if (searchTerm) {
+  if (searchTerm || previousSearch) {
     const {
       status,
       data: { results, total, total_pages: totalPages },
     } = await axios.get("/api/searchPhotos", {
       params: {
-        searchTerm,
+        searchTerm: searchTerm || previousSearch,
         currentPage,
       },
     });
@@ -50,6 +46,10 @@ async function getPhotosMiddleware({
     pagesLeft = totalPages - currentPage;
     currentPage = totalPages - pagesLeft + 1;
     totalPhotos = total;
+
+    // set previousSearch so if input is cleared pagination works
+    previousSearch = searchTerm;
+
     // return id for unique react key
     formattedPhotos = results.map(
       ({ height, width, id, urls }: FormattedPhoto) => ({
@@ -61,11 +61,6 @@ async function getPhotosMiddleware({
     );
   }
 
-  console.log("INSIDE MIDDLEWARE -- before return");
-  console.log({ searchTerm, currentPage });
-
-  // make sure you re-evaluate this and only return to the front end what it needs
-  // return { formattedPhotos, pagesLeft, totalPhotos, currentPage, timeStamp };
   return { formattedPhotos, pagesLeft, timeStamp };
 }
 

@@ -1,56 +1,26 @@
-// ORGANIZE THESE IMPORTS
-// ORGANIZE THESE IMPORTS
-// ORGANIZE THESE IMPORTS
-// ORGANIZE THESE IMPORTS
-// ORGANIZE THESE IMPORTS
-// ORGANIZE THESE IMPORTS
+import React, { useState, useRef } from "react";
 import type { NextPage } from "next";
+
 import Head from "next/head";
-
-import React, {
-  useState,
-  useEffect,
-  Dispatch,
-  SetStateAction,
-  useRef,
-} from "react";
-
-import { useScrollHeight } from "../customHooks/useScrollHeight";
-import { getPhotosMiddleware, FormattedPhoto } from "../apiMiddleware";
-
-// utlize this in the picture grid and also for clicking individual pictures
-// import styles from "../styles/Home.module.css";
+import ImageGrid from "../components/ImageGrid";
 import SearchPhotosForm from "../components/SearchPhotosForm";
 
-import ImageGrid from "../components/ImageGrid";
+import { useScrollHeight } from "../customHooks/useScrollHeight";
+import { FormattedPhoto } from "../apiMiddleware";
 import { useInfiniteScroll } from "../customHooks/useInfiniteScroll";
 
 import styles from "./main.module.scss";
 
-// import throttle from "lodash/throttle";
-
 type FormattedPhotos = [FormattedPhoto] | [];
 
-// THINGS TO HANDLE
-// REACHING END OF PAGES -- NO MORE PHOTOS TO NOW - total photos - photos.length === 0 or pagesLeft === 0?
-// NO PHOTO RESULTS
-
-// MAKE MODULAR
-// PHOTO DETAILS CLICK
-// REREAD DIRECTIONS
-
-// MAKE TYPES FILE AND EXPORT ALL TYPES FROM THERE?
-
-// LOADING STATE?
-
 const noResultsString =
-  "Doesn't look like your search returned any results, try adjusting your search term";
+  "Oops... doesn't look like your search returned any results, try adjusting your search term";
 const endOfResultsString =
   "Looks like we ran out of photos to show you, try a different search!";
 
 const Home: NextPage = () => {
-  // notes for discussion in readme
-  // app state - would setup a better state management system (eg: context, redux, etc) depending on use cases if app was more than a single page
+  // TODO:
+  // app state - setup a better state management system (eg: context, redux, etc) depending on use cases/app size
   const [searchInput, setSearchInput] = useState<string>("");
   const [photos, setPhotos] = useState<FormattedPhotos>([]);
   const [pagesLeft, setPagesLeft] = useState<number | undefined>();
@@ -68,7 +38,6 @@ const Home: NextPage = () => {
     setPagesLeft,
   });
 
-  // update the id of the image container when you make this more modular and make components for everything
   return (
     <div className={styles.main}>
       <Head>
@@ -89,11 +58,11 @@ const Home: NextPage = () => {
         }}
       />
       <ImageGrid {...{ photos }} />
-      {pagesLeft && pagesLeft < 0 && !photos.length && (
-        <div>{noResultsString}</div>
+      {!!pagesLeft && pagesLeft < 0 && !photos.length && (
+        <div className={styles.noResults}>{noResultsString}</div>
       )}
-      {pagesLeft && pagesLeft <= 0 && photos.length && (
-        <div>{endOfResultsString}</div>
+      {!!pagesLeft && pagesLeft <= 0 && !!photos.length && (
+        <div className={styles.noResults}>{endOfResultsString}</div>
       )}
     </div>
   );

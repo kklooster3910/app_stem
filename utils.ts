@@ -23,8 +23,9 @@ const submitForm = ({
 }: FormSubmit) => {
   const endOfPages = !!pagesLeft && pagesLeft <= 0;
   // prevent api from being hit if at the end of pages
-  if (endOfPages) return;
-  getPhotosMiddleware({ searchTerm, reset, endOfPages })
+  if (endOfPages && !reset) return;
+
+  getPhotosMiddleware({ searchTerm, reset })
     .then((res) => {
       const { formattedPhotos, pagesLeft, timeStamp } = res;
 
