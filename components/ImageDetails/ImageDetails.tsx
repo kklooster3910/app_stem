@@ -46,6 +46,7 @@ const ImageDetails = ({
           width={width}
           placeholder="blur"
           blurDataURL="/loading.jpeg"
+          priority={true}
         />
       </div>
       <div
