@@ -14,15 +14,17 @@ export type FormattedPhoto = {
 
 let currentPage: number;
 
-// IF pages left is negative or 0 then we don't want to call this end point towards the bottom of scroll
-
 async function getPhotosMiddleware({
   searchTerm,
+  // endOfPages,
   reset,
 }: {
   searchTerm: string;
+  endOfPages: boolean;
   reset: boolean;
 }) {
+  // if (endOfPages) return {};
+
   let formattedPhotos = [],
     pagesLeft,
     totalPhotos,
@@ -42,8 +44,6 @@ async function getPhotosMiddleware({
     });
     if (status !== 200)
       throw new Error("searchPhotos failed: check console logs");
-
-    console.log({ total, totalPages });
 
     // set timestamp to current date after successful return
     timeStamp = Date.now();
@@ -65,7 +65,8 @@ async function getPhotosMiddleware({
   console.log({ searchTerm, currentPage });
 
   // make sure you re-evaluate this and only return to the front end what it needs
-  return { formattedPhotos, pagesLeft, totalPhotos, currentPage, timeStamp };
+  // return { formattedPhotos, pagesLeft, totalPhotos, currentPage, timeStamp };
+  return { formattedPhotos, pagesLeft, timeStamp };
 }
 
 export { getPhotosMiddleware };
