@@ -39,7 +39,7 @@ const ImageDetails = ({
         <Image
           src={imgSrc || ""}
           alt=""
-          quality={100}
+          quality={85}
           layout="responsive"
           objectFit="contain"
           height={height}
