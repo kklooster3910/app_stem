@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 
-import { getPhotosMiddleware, FormattedPhoto } from "../apiMiddleware";
+import { getPhotosMiddleware, FormattedPhoto } from "./apiMiddleware";
 
 type FormattedPhotos = [FormattedPhoto] | [];
 

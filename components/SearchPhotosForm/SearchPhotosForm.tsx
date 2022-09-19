@@ -1,7 +1,7 @@
 import React, { ChangeEvent, FormEvent, Dispatch, SetStateAction } from "react";
 
 import { FormattedPhoto } from "../../apiMiddleware";
-import { submitForm } from "../../pages/utils";
+import { submitForm } from "../../utils";
 
 import styles from "./SearchPhotosForm.module.scss";
 

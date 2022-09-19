@@ -2,7 +2,7 @@ import { useEffect, Dispatch, SetStateAction } from "react";
 
 import { FormattedPhoto } from "../apiMiddleware";
 
-import { submitForm } from "../pages/utils";
+import { submitForm } from "../utils";
 
 type FormattedPhotos = [FormattedPhoto] | [];
 
