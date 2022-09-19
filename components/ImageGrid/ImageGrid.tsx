@@ -36,7 +36,7 @@ const ImageGrid = ({ photos }: ImageGridProps) => {
             <div key={`${id}_${i}`} className={styles.gridImage}>
               <Image
                 src={small}
-                quality={85}
+                quality={75}
                 layout="responsive"
                 height={height}
                 width={width}
